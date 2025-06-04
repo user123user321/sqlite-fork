@@ -1,0 +1,25 @@
+name: Build sqlite3
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: fedora-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo dnf install -y git gcc make tcl-devel
+
+      - name: Build sqlite3
+        run: |
+          ./configure
+          make
+
+      - name: Upload sqlite3 binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: sqlite3
